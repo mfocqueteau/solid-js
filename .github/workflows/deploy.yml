@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - name: Setup Bun
-        uses: oven-sh/setup-bun@v1
+        uses: oven-sh/setup-bun@v1 && bun init -y
 
       - name: Install dependencies
         run: bun install --production # bahmutov/npm-install@v1
