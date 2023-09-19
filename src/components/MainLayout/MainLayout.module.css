@@ -1,0 +1,11 @@
+@media (min-width: 768px) {
+  .leftColumn {
+    width: 4rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .leftColumn {
+    width: 0;
+  }
+}
