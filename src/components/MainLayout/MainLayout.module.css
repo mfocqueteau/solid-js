@@ -2,10 +2,18 @@
   .leftColumn {
     width: 4rem;
   }
+
+  .main {
+    padding: 0 2rem;
+  }
 }
 
 @media (max-width: 768px) {
   .leftColumn {
     width: 0;
+  }
+
+  .main {
+    padding: 0 0.5rem;
   }
 }

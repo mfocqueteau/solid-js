@@ -8,7 +8,7 @@ export function MainLayout() {
       <div class={css.leftColumn}>
         <Navbar />
       </div>
-      <main style={{ padding: "0 2rem" }}>
+      <main class={css.main}>
         <Outlet />
       </main>
     </div>
