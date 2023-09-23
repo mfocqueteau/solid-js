@@ -1,15 +1,18 @@
 import css from "./BachilleratoStyle.module.css";
 import { useForm } from "../../hooks/useForm";
 import { LETTERS } from "./BachilleratoConstants";
-import { LetterStrip } from "./LetterStrip";
 import { Button } from "@suid/material";
 import { createSignal } from "solid-js";
 
 export function Bachillerato() {
-  const gameLetters = useForm(Object.fromEntries(LETTERS.map((l) => [l, true])));
+  const gameLetters = useForm(LETTERS);
   const [currentLetter, setCurrentLetter] = createSignal("");
 
-  function removeLetter(letter: (typeof LETTERS)[number]) {
+  function toggleLetter(letter: keyof typeof LETTERS) {
+    return () => gameLetters.setValues((prev) => ({ ...prev, [letter]: !prev[letter] }));
+  }
+
+  function removeLetter(letter: keyof typeof LETTERS) {
     gameLetters.setValues((prev) => ({ ...prev, [letter]: false }));
   }
 
@@ -18,7 +21,7 @@ export function Bachillerato() {
       .filter(([_letter, status]) => status)
       .map(([letter, _status]) => letter);
     const randomLetter = remainingLetters[Math.floor(Math.random() * remainingLetters.length) % remainingLetters.length];
-    removeLetter(randomLetter);
+    removeLetter(randomLetter as keyof typeof LETTERS);
     setCurrentLetter(randomLetter);
   }
 
@@ -32,23 +35,24 @@ export function Bachillerato() {
       </ul>
 
       <div class={css.control}>
-        <Button
-          onclick={() => gameLetters.setValues(Object.fromEntries(LETTERS.map((l) => [l, true])))}
-          style={{ color: "var(--accent)", "z-index": 0 }}
-        >
-          Activar todas
-        </Button>
-        <Button onclick={() => gameLetters.setValues(Object.fromEntries(LETTERS.map((l) => [l, false])))} style={{ color: "var(--accent)" }}>
-          Desactivar todas
+        <Button onclick={() => gameLetters.setValues(LETTERS)} style={{ color: "var(--accent)" }}>
+          Reset
         </Button>
       </div>
 
-      <LetterStrip gameLetters={gameLetters} />
+      {Object.keys(LETTERS).map((l) => (
+        <span
+          class={`${css.label} ${gameLetters.values()[l as keyof typeof LETTERS] ? css.activeLabel : ""}`}
+          onclick={toggleLetter(l as keyof typeof LETTERS)}
+        >
+          {l}
+        </span>
+      ))}
 
       <div style={{ display: "flex", "flex-direction": "column", margin: "2rem auto", width: "15rem" }}>
         <div class={css.currentLetter}>{currentLetter()}</div>
         <Button onclick={nextNumber} style={{ color: "var(--accent)" }}>
-          Siguiente número
+          Siguiente letra
         </Button>
       </div>
     </>

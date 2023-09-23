@@ -3,7 +3,7 @@
 }
 
 :root {
-  --accent-hsl: 120, 73%, 75%;
+  --accent-hsl: 120, 70%, 60%;
   --accent: hsl(var(--accent-hsl));
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -64,7 +64,8 @@ p {
 
 @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
+    --accent-hsl: 120, 70%, 30%;
+    color: hsl(0, 0%, 15%);
     background-color: #ffffff;
   }
   a:hover {

@@ -15,7 +15,7 @@ export function Navbar() {
       <nav class={css.navbar}>
         <ul>
           <li>
-            <NavLink href="/" text="Home" icon={<Home />} />
+            <NavLink href="/" text="Home" icon={<Home />} end />
           </li>
           <li>
             <NavLink href="/bachillerato" text="Bachillerato" icon={<TableRows />} />
