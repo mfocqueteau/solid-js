@@ -1,0 +1,31 @@
+.rules {
+  padding-left: 1rem;
+}
+
+.control {
+  display: flex;
+  gap: 1rem;
+  margin: 2rem auto 1rem;
+}
+
+.label {
+  border: 1px solid hsla(var(--accent-hsl), 10%);
+  cursor: pointer;
+  display: inline-block;
+  font-size: large;
+  padding: 0.5rem 1rem;
+  text-align: center;
+  transition: background-color 100ms;
+  user-select: none;
+  width: 3rem;
+}
+
+.activeLabel {
+  background-color: hsla(var(--accent-hsl), 20%);
+}
+
+.currentLetter {
+  font-size: 5rem;
+  height: 10rem;
+  text-align: center;
+}

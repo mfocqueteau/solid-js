@@ -1,5 +1,5 @@
 import css from "./Navbar.module.css";
-import { Home, Info } from "@suid/icons-material";
+import { Home, TableRows } from "@suid/icons-material";
 import { NavLink } from "./NavLink";
 
 export function Navbar() {
@@ -15,10 +15,10 @@ export function Navbar() {
       <nav class={css.navbar}>
         <ul>
           <li>
-            <NavLink href="/dashboard" text="Home" icon={<Home />} />
+            <NavLink href="/" text="Home" icon={<Home />} />
           </li>
           <li>
-            <NavLink href="/about" text="About" icon={<Info />} />
+            <NavLink href="/bachillerato" text="Bachillerato" icon={<TableRows />} />
           </li>
         </ul>
       </nav>

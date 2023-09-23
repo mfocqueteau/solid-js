@@ -2,16 +2,15 @@ import "./index.css";
 import { render } from "solid-js/web";
 import { Route, Router, Routes } from "@solidjs/router"; // 👈 Import the router
 import { MainLayout } from "./components/MainLayout/MainLayout";
-import { Dashboard } from "./pages/Dashboard";
-import { About } from "./pages/About";
+import { Home } from "./pages/Home";
+import { Bachillerato } from "./pages/Bachillerato/Bachillerato";
 render(
   () => (
     <Router>
       <Routes>
         <Route path="/solid-js" component={MainLayout}>
-          <Route path="/" component={Dashboard} />
-          <Route path="/dashboard" component={Dashboard} />
-          <Route path="/about" component={About} />
+          <Route path="/bachillerato" component={Bachillerato} />
+          <Route path="/" component={Home} />
         </Route>
       </Routes>
     </Router>
