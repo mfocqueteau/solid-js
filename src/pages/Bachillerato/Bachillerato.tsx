@@ -12,7 +12,7 @@ export function Bachillerato() {
   const [stopTime, setStopTime] = createSignal(90);
   const [currentTime, setCurrentTime] = createSignal(0);
   const [loading, setLoading] = createSignal(false);
-  const alarm = new Audio("./alarm.mp3");
+  const alarm = new Audio("/alarm.mp3");
 
   function toggleLetter(letter: keyof typeof LETTERS) {
     return () => gameLetters.setValues((prev) => ({ ...prev, [letter]: !prev[letter] }));
@@ -50,8 +50,6 @@ export function Bachillerato() {
   return (
     <>
       <h1>Bachillerato</h1>
-
-      <button onClick={() => alarm.play()}></button>
 
       <ul class={css.rules}>
         <li>La letras disponibles para jugar están en verde.</li>
