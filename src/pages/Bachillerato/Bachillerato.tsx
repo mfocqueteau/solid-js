@@ -3,10 +3,16 @@ import { useForm } from "../../hooks/useForm";
 import { LETTERS } from "./BachilleratoConstants";
 import { Button } from "@suid/material";
 import { createSignal } from "solid-js";
+import { formatTime } from "./BachilleratoUtils";
+import { AddCircle, RemoveCircle } from "@suid/icons-material";
 
 export function Bachillerato() {
   const gameLetters = useForm(LETTERS);
   const [currentLetter, setCurrentLetter] = createSignal("");
+  const [stopTime, setStopTime] = createSignal(90);
+  const [currentTime, setCurrentTime] = createSignal(0);
+  const [loading, setLoading] = createSignal(false);
+  const alarm = new Audio("./alarm.mp3");
 
   function toggleLetter(letter: keyof typeof LETTERS) {
     return () => gameLetters.setValues((prev) => ({ ...prev, [letter]: !prev[letter] }));
@@ -16,7 +22,7 @@ export function Bachillerato() {
     gameLetters.setValues((prev) => ({ ...prev, [letter]: false }));
   }
 
-  function nextNumber() {
+  function pickRandomLetter() {
     const remainingLetters = Object.entries(gameLetters.values())
       .filter(([_letter, status]) => status)
       .map(([letter, _status]) => letter);
@@ -25,9 +31,27 @@ export function Bachillerato() {
     setCurrentLetter(randomLetter);
   }
 
+  function nextRound() {
+    setCurrentTime(3);
+    setLoading(true);
+    const headsupTime = setInterval(() => {
+      setCurrentTime((prev) => prev - 1);
+      if (currentTime() == 0 && loading()) {
+        pickRandomLetter();
+        setLoading(false);
+        setCurrentTime(stopTime);
+      } else if (currentTime() == 0) {
+        alarm.play();
+        clearInterval(headsupTime);
+      }
+    }, 1_000);
+  }
+
   return (
     <>
       <h1>Bachillerato</h1>
+
+      <button onClick={() => alarm.play()}></button>
 
       <ul class={css.rules}>
         <li>La letras disponibles para jugar están en verde.</li>
@@ -50,10 +74,19 @@ export function Bachillerato() {
       ))}
 
       <div style={{ display: "flex", "flex-direction": "column", margin: "2rem auto", width: "15rem" }}>
-        <div class={css.currentLetter}>{currentLetter()}</div>
-        <Button onclick={nextNumber} style={{ color: "var(--accent)" }}>
+        <div style={{ "align-items": "center", display: "flex", "font-size": "x-large", gap: "1rem", "justify-content": "center" }}>
+          <RemoveCircle fontSize="large" onClick={() => setStopTime((prev) => prev - 10)} style={{ cursor: "pointer" }} />
+          {formatTime(stopTime())}
+          <AddCircle fontSize="large" onClick={() => setStopTime((prev) => prev + 10)} style={{ cursor: "pointer" }} />
+        </div>
+        <div style={{ "align-items": "center", display: "flex", "font-size": "x-large", gap: "1rem", "justify-content": "center" }}>
+          {formatTime(currentTime())}
+        </div>
+        <div class={css.currentLetter}>{loading() ? <></> : currentLetter()}</div>
+        <Button onclick={nextRound} style={{ color: "var(--accent)" }}>
           Siguiente letra
         </Button>
+        <audio src="./alarm"></audio>
       </div>
     </>
   );
